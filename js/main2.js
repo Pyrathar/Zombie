@@ -28,7 +28,7 @@ function create() {
     game.physics.enable([this.ninja], Phaser.Physics.ARCADE);
 
     sprites = game.add.group();
-    game.time.events.loop(50, createzombie, this);
+    game.time.events.loop(999, createzombie, this);
 
     maingame();
     createzombie();
@@ -42,7 +42,7 @@ function create() {
 }
 
 function createzombie(){
-  var zombie = sprites.create(0,game.world.randomY,'zombie');
+  var zombie = sprites.create(800,game.rnd.integerInRange(130, 160),'zombie');
   zombie.scale.setTo(-0.30, 0.30);
   zombie.animations.add('left', [0, 1, 2, 3], 10, true);
   zombie.animations.play('left');
@@ -54,13 +54,13 @@ function createzombie(){
 function update() {
 
 
-   sprites.setAll('x', 10, true, true, 1);
-
-    sprites.forEach(createzombie, this, true);
+   sprites.setAll('x', -1, true, true, 1);
 
 
 
-    game.physics.arcade.collide(zombie, this.ninja, collisionHandler, null, this);
+
+
+    game.physics.arcade.collide(this.zombie, this.ninja, collisionHandler, null, this);
 
 
 
@@ -75,7 +75,7 @@ function collisionHandler(obj1, obj2) {
     if (obj1==this.shuriken&&obj2==this.zombie){
       console.log("dead")
 
-      zombie.destroy();
+      obj2.remove(obj2,true);
     }
     game.stage.backgroundColor = '#992d2d';
 
